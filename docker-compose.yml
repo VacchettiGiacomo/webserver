@@ -1,0 +1,27 @@
+# Struttura del progetto:
+#
+# cartella_progetto/
+# ├── docker-compose.yml     # Configurazione principale di Docker Compose
+# ├── Dockerfile            # Istruzioni per costruire il container web
+# ├── nginx.conf           # Configurazione del server web Nginx
+# └── src/                 # Cartella dei file sorgente
+#     └── index.html       # Contenuto del nostro sito web
+
+# File di configurazione Docker Compose
+# Questo file definisce tutti i servizi che compongono la nostra applicazione
+version: '3.8'
+
+services:
+  # Definizione del servizio web principale
+  webserver:
+    # Costruisce l'immagine usando il nostro Dockerfile nella directory corrente
+    build: .
+    # Mappa la porta 80 del container alla porta 80 dell'host
+    ports:
+      - "80:80"
+    # Riavvia automaticamente il container in caso di crash
+    restart: always
+    # Monta la nostra directory del codice sorgente nel container
+    # Questo ci permette di modificare i file senza ricostruire il container
+    volumes:
+      - ./src:/usr/share/nginx/html
